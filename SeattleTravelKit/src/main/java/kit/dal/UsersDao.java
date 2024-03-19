@@ -42,7 +42,7 @@ public class UsersDao {
 			insertStmt.setString(3,user.getPassword());
 			insertStmt.setString(4,user.getFirstName());
 			insertStmt.setString(5,user.getLastName());
-			insertStmt.setInt(6,user.getPhone());
+			insertStmt.setLong(6,user.getPhone());
 			insertStmt.executeUpdate();
 			
 			return user;	
@@ -72,7 +72,7 @@ public class UsersDao {
 				String password = results.getString("Password");
 				String firstName = results.getString("FirstName");
 				String lastName = results.getString("LastName");
-				int phone = results.getInt("Phone");
+				long phone = results.getLong("Phone");
 				
 
 				Users user = new Users(resutUserName, email, password, firstName, lastName, phone);
