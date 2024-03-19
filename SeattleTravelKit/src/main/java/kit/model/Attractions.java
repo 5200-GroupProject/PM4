@@ -3,7 +3,7 @@ package kit.model;
 public class Attractions {
 	protected int attractionId;
 	protected String attractionsName;
-	protected int phone;
+	protected String phone;
 	protected String website;
     protected int zipCode;
     protected String area;
@@ -15,7 +15,7 @@ public class Attractions {
 	 * @param zipCode
 	 * @param area
 	 */
-	public Attractions(int attractionId, String attractionsName, int phone, String website, int zipCode,
+	public Attractions(int attractionId, String attractionsName, String phone, String website, int zipCode,
 			String area) {
 		this.attractionId = attractionId;
 		this.attractionsName = attractionsName;
@@ -35,7 +35,7 @@ public class Attractions {
 	 * @param zipCode
 	 * @param area
 	 */
-	public Attractions(String attractionsName, int phone, String website, int zipCode, String area) {
+	public Attractions(String attractionsName, String phone, String website, int zipCode, String area) {
 		this.attractionsName = attractionsName;
 		this.phone = phone;
 		this.website = website;
@@ -73,13 +73,13 @@ public class Attractions {
 	/**
 	 * @return the phone
 	 */
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 	/**
 	 * @param phone the phone to set
 	 */
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	/**
