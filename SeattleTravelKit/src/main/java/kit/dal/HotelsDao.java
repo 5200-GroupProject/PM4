@@ -60,7 +60,14 @@ public class HotelsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
 	}
 	
 	
@@ -93,7 +100,17 @@ public class HotelsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 		return null; 
 	}
 	
@@ -128,7 +145,17 @@ public class HotelsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 
 	}
 	
@@ -163,7 +190,17 @@ public class HotelsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 	}
 	
 	public List<Hotels> findHotelAboveRating(double rating) throws SQLException {
@@ -198,7 +235,17 @@ public class HotelsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 	}
 	
 	
@@ -221,7 +268,15 @@ public class HotelsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		
+		} finally {
+        if(connection != null) {
+            connection.close();
+        }
+        if(updateStmt != null) {
+            updateStmt.close();
+        }
+    }
 		
 	}
 	
@@ -244,7 +299,14 @@ public class HotelsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+    } finally {
+        if(connection != null) {
+            connection.close();
+        }
+        if(updateStmt != null) {
+            updateStmt.close();
+        }
+    }
 		
 	}
 	
@@ -264,7 +326,14 @@ public class HotelsDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
 	}
 
 }

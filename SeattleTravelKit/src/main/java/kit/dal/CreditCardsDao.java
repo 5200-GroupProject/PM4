@@ -46,7 +46,15 @@ public class CreditCardsDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+            	insertStmt.close();
+            }
+    
+        }
 		
 	}
 	
@@ -74,17 +82,28 @@ public class CreditCardsDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 		return null; 
 			
 	}
 	
 	
 	public List<CreditCards> findCardsByUserName(String userName) throws SQLException {
-		List<CreditCards> cards = new ArrayList<CreditCards>();
+		System.out.println(userName);
+		List<CreditCards> cards = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement selectStmt = null;
-		String selectCard = "SELECT UserName, CardNumber, Expiration FROM CreditCards WHERE CardNumber=?;";
+		String selectCard = "SELECT UserName, CardNumber, Expiration FROM CreditCards WHERE UserName=?;";
 		ResultSet results = null;
 		
 		try {
@@ -100,12 +119,22 @@ public class CreditCardsDao {
 				
 				CreditCards card = new CreditCards(userName, cardNumber, expiration);
 				cards.add(card);
-				} 
+			} 
 			return cards;
 			}catch (SQLException e) {
 				e.printStackTrace();
 				throw e;
-			} 
+			} finally {
+	            if(connection != null) {
+	                connection.close();
+	            }
+	            if(selectStmt != null) {
+	                selectStmt.close();
+	            }
+	            if(results != null) {
+	                results.close();
+	            }
+	        }
 	}
 	
 	
@@ -129,7 +158,14 @@ public class CreditCardsDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(updateStmt != null) {
+                updateStmt.close();
+            }
+        }
 
 	}
 	
@@ -150,7 +186,14 @@ public class CreditCardsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
 	}
 
-}

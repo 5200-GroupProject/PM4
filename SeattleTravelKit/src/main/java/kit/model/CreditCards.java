@@ -4,6 +4,7 @@ public class CreditCards {
 	protected String userName;
     protected String cardNumber;
     protected String expiration;
+    
 	/**
 	 * @param userName
 	 * @param cardNumber
@@ -14,6 +15,7 @@ public class CreditCards {
 		this.cardNumber = cardNumber;
 		this.expiration = expiration;
 	}
+	
 	/**
 	 * @return the userName
 	 */
