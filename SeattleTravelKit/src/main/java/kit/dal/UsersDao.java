@@ -49,7 +49,14 @@ public class UsersDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
 		
 	}
 	
@@ -67,7 +74,6 @@ public class UsersDao {
 			
 			results = selectStmt.executeQuery();
 			if(results.next()) {
-				String resutUserName = results.getString("UserName");
 				String email = results.getString("Email");
 				String password = results.getString("Password");
 				String firstName = results.getString("FirstName");
@@ -75,13 +81,23 @@ public class UsersDao {
 				long phone = results.getLong("Phone");
 				
 
-				Users user = new Users(resutUserName, email, password, firstName, lastName, phone);
+				Users user = new Users(userName, email, password, firstName, lastName, phone);
 				return user;
 		} 
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 		return null;
 		
 	}
@@ -115,7 +131,17 @@ public class UsersDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 		
 	}
 	
@@ -140,7 +166,14 @@ public class UsersDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(updateStmt != null) {
+                updateStmt.close();
+            }
+        }
 
 	}
 	
@@ -165,7 +198,14 @@ public class UsersDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(updateStmt != null) {
+                updateStmt.close();
+            }
+        }
 	}
 	
 	public Users deleteUser(Users user) throws SQLException {
@@ -183,7 +223,14 @@ public class UsersDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
 		
 	}
 	

@@ -57,7 +57,14 @@ public class AttractionsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
 	}
 	
 	
@@ -87,7 +94,17 @@ public class AttractionsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 		
 		return null;
 	}
@@ -118,7 +135,17 @@ public class AttractionsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 		
 		return null;
 	}
@@ -151,7 +178,17 @@ public class AttractionsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
 		
 		return null;
 	}
@@ -175,7 +212,14 @@ public class AttractionsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		} 
+		} finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(updateStmt != null) {
+                updateStmt.close();
+            }
+        }
 	}
 	
 	
@@ -194,7 +238,14 @@ public class AttractionsDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}
+		}finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
 	}
 	
 	

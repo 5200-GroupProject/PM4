@@ -14,12 +14,16 @@ public class Inserter {
 		UsersDao usersDao = UsersDao.getInstance();
 		CreditCardsDao creditCardsDao = CreditCardsDao.getInstance();
 		CrimesDao crimesDao = CrimesDao.getInstance();
+
 		
 		// READ.
 		Users user = usersDao.findUserByUserName("zoe99");
 		System.out.println("User: " + user.getFirstName() + " " + user.getLastName());
 		
+		
+
 		List<CreditCards> cardsList = creditCardsDao.findCardsByUserName("sarah84");
+		System.out.println(cardsList.size());
         for (CreditCards card : cardsList) {
             System.out.format("Reading credit card: u:%s cn:%s e:%s \n",
                 card.getUserName(), card.getCardNumber(), card.getExpiration());
@@ -30,5 +34,6 @@ public class Inserter {
 	        System.out.format("Reading crimes:" + crime.getAddress());
 	        }
 	    }
+       
 }
 
