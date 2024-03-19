@@ -38,7 +38,7 @@ public class AttractionsDao {
 			connection = connectionManager.getConnection();
 			insertStmt = connection.prepareStatement(insertAttraction);
 			insertStmt.setString(1,attraction.getAttractionsName());
-			insertStmt.setInt(2,attraction.getPhone());
+			insertStmt.setString(2,attraction.getPhone());
 			insertStmt.setString(3,attraction.getWebsite());
 			insertStmt.setInt(4,attraction.getZipCode());
 			insertStmt.setString(5,attraction.getArea());
@@ -82,7 +82,7 @@ public class AttractionsDao {
 			
 			if (results.next()) {
 				String attractionName = results.getString("AttractionsName");
-				int phone = results.getInt("Phone");
+				String phone = results.getString("Phone");
 				String website = results.getString("Website");
 				int zipCode = results.getInt("ZipCode");
 				String area = results.getString("Area");
@@ -123,7 +123,7 @@ public class AttractionsDao {
 			
 			if (results.next()) {
 				int attractionId = results.getInt("AttractionsId");
-				int phone = results.getInt("Phone");
+				String phone = results.getString("Phone");
 				String website = results.getString("Website");
 				int zipCode = results.getInt("ZipCode");
 				String area = results.getString("Area");
@@ -152,48 +152,49 @@ public class AttractionsDao {
 	
 	
 	public List<Attractions> findAttractionByZipCode(int zipCode) throws SQLException {
-		Connection connection = null;
-		PreparedStatement selectStmt = null;
-		String selectAttraction = "SELECT AttractionId, AttractionsName, Phone, Website, ZipCode, Area " +
-								"FROM Attractions WHERE AttractionName=?;";
-		ResultSet results = null;
-		List<Attractions> attractions = new ArrayList<>()
-;		try {
-			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectAttraction);
-			selectStmt.setString(1, selectAttraction);
-			results = selectStmt.executeQuery();
-			
-			while (results.next()) {
-				int attractionId = results.getInt("AttractionsId");
-				String attractionName = results.getString("AttractionsName");
-				int phone = results.getInt("Phone");
-				String website = results.getString("Website");
-				String area = results.getString("Area");
-				
-				Attractions attraction = new Attractions(attractionId, attractionName, phone, website, zipCode, area);
-				attractions.add(attraction);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-            if(connection != null) {
-                connection.close();
-            }
-            if(selectStmt != null) {
-                selectStmt.close();
-            }
-            if(results != null) {
-                results.close();
-            }
-        }
-		
-		return null;
+	    Connection connection = null;
+	    PreparedStatement selectStmt = null;
+	    ResultSet results = null;
+	    List<Attractions> attractions = new ArrayList<>();
+	    String selectAttraction = "SELECT AttractionId, Name, Phone, Website, ZipCode, Area " +
+	            "FROM Attractions WHERE ZipCode=?;";
+	    try {
+	        connection = connectionManager.getConnection();
+	        selectStmt = connection.prepareStatement(selectAttraction);
+	        selectStmt.setInt(1, zipCode);
+	        results = selectStmt.executeQuery();
+
+	        while (results.next()) {
+	            int attractionId = results.getInt("AttractionId");
+	            String name = results.getString("Name");
+	            String phone = results.getString("Phone");
+	            String website = results.getString("Website");
+	            int resultZipCode = results.getInt("ZipCode");
+	            String area = results.getString("Area");
+
+	            Attractions attraction = new Attractions(attractionId, name, phone, website, resultZipCode, area);
+	            attractions.add(attraction);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    } finally {
+	        // It's important to close resources to prevent leaks
+	        if (results != null) {
+	            results.close();
+	        }
+	        if (selectStmt != null) {
+	            selectStmt.close();
+	        }
+	        if (connection != null) {
+	            connection.close();
+	        }
+	    }
+
+	    return attractions; // Return the actual list instead of null
 	}
 	
-	public Attractions updateAttractionPhone(Attractions attraction, int phone) throws SQLException {
+	public Attractions updateAttractionPhone(Attractions attraction, String phone) throws SQLException {
 		Connection connection = null;
 		PreparedStatement updateStmt = null;
 		String updateAttraction = "UPDATE Attractions SET Phone=? WHERE AttractionId=?;";
@@ -201,7 +202,7 @@ public class AttractionsDao {
 		try {
 			connection = connectionManager.getConnection();
 			updateStmt = connection.prepareStatement(updateAttraction);
-			updateStmt.setInt(1,phone);
+			updateStmt.setString(1,phone);
 			updateStmt.setInt(2,attraction.getAttractionId());
 			
 			updateStmt.executeUpdate();
