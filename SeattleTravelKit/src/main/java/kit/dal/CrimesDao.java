@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import kit.model.Crimes;
 
 public class CrimesDao {
@@ -22,8 +21,7 @@ public class CrimesDao {
     }
 
     public Crimes create(Crimes crime) throws SQLException {
-        String insertCrime = "INSERT INTO Crimes(CaseNumber,CreatedDateTime,Address,ZipCode) " +
-                "VALUES(?,?,?,?);";
+        String insertCrime = "INSERT INTO Crimes(CaseNumber,CreatedDateTime,Address,ZipCode) VALUES(?,?,?,?);";
         Connection connection = null;
         PreparedStatement insertStmt = null;
         try {
@@ -32,7 +30,7 @@ public class CrimesDao {
             insertStmt.setString(1, crime.getCaseNumber());
             insertStmt.setTimestamp(2, new Timestamp(crime.getCreatedDateTime().getTime()));
             insertStmt.setString(3, crime.getAddress());
-            insertStmt.setInt(4, crime.getZipCode());
+            insertStmt.setString(4, crime.getZipCode());
             insertStmt.executeUpdate();
             return crime;
         } catch (SQLException e) {
@@ -47,24 +45,30 @@ public class CrimesDao {
             }
         }
     }
-    
-    
-    public List<Crimes> findCrimesByZipCode(int zipCode) throws SQLException {
+
+    public List<Crimes> findCrimesByZipCode(String zipCode) throws SQLException {
         List<Crimes> crimes = new ArrayList<>();
-        String selectCrimes = "SELECT CaseNumber,CreatedDateTime,Address,ZipCode FROM Crimes WHERE ZipCode=?;";
+        
+        String selectCrimes = "SELECT CaseNumber,CreatedDateTime,Address,ZipCode FROM Crimes WHERE ZipCode LIKE ?;";
         Connection connection = null;
         PreparedStatement selectStmt = null;
         ResultSet results = null;
         try {
             connection = connectionManager.getConnection();
             selectStmt = connection.prepareStatement(selectCrimes);
-            selectStmt.setInt(1, zipCode);
+       
+            selectStmt.setString(1, "%" + zipCode + "%");
             results = selectStmt.executeQuery();
             while(results.next()) {
-                Crimes crime = new Crimes(results.getString("CaseNumber"),
-                                          new Date(results.getTimestamp("CreatedDateTime").getTime()),
-                                          results.getString("Address"),
-                                          results.getInt("ZipCode"));
+                String caseNumber = results.getString("CaseNumber");
+                Timestamp timestamp = results.getTimestamp("CreatedDateTime");
+                Date createdDateTime = null;
+                if (timestamp != null) {
+                    createdDateTime = new Date(timestamp.getTime());
+                }
+                String address = results.getString("Address");
+                String zipCodeResult = results.getString("ZipCode");
+                Crimes crime = new Crimes(caseNumber, createdDateTime, address, zipCodeResult);
                 crimes.add(crime);
             }
             return crimes;
@@ -84,6 +88,7 @@ public class CrimesDao {
         }
     }
 
+
     public Crimes findCrimeByCaseNumber(String caseNumber) throws SQLException {
         String selectCrime = "SELECT CaseNumber,CreatedDateTime,Address,ZipCode FROM Crimes WHERE CaseNumber=?;";
         Connection connection = null;
@@ -95,10 +100,12 @@ public class CrimesDao {
             selectStmt.setString(1, caseNumber);
             results = selectStmt.executeQuery();
             if(results.next()) {
-                Crimes crime = new Crimes(results.getString("CaseNumber"),
-                                          new Date(results.getTimestamp("CreatedDateTime").getTime()),
-                                          results.getString("Address"),
-                                          results.getInt("ZipCode"));
+                Crimes crime = new Crimes(
+                    results.getString("CaseNumber"),
+                    new Date(results.getTimestamp("CreatedDateTime").getTime()),
+                    results.getString("Address"),
+                    results.getString("ZipCode")
+                );
                 return crime;
             }
         } catch (SQLException e) {
@@ -117,8 +124,7 @@ public class CrimesDao {
         }
         return null;
     }
-    
-    
+
     public Crimes updateAddress(Crimes crime, String newAddress) throws SQLException {
         String updateCrime = "UPDATE Crimes SET Address=? WHERE CaseNumber=?;";
         Connection connection = null;
@@ -129,8 +135,6 @@ public class CrimesDao {
             updateStmt.setString(1, newAddress);
             updateStmt.setString(2, crime.getCaseNumber());
             updateStmt.executeUpdate();
-
-            // Update the crime's address before returning to the caller.
             crime.setAddress(newAddress);
             return crime;
         } catch (SQLException e) {
@@ -145,34 +149,29 @@ public class CrimesDao {
             }
         }
     }
-    
 
     public Crimes delete(Crimes crime) throws SQLException {
         String deleteCrime = "DELETE FROM Crimes WHERE CaseNumber=?;";
         Connection connection = null;
         PreparedStatement deleteStmt = null;
-        try {
-            connection = connectionManager.getConnection();
-            deleteStmt = connection.prepareStatement(deleteCrime);
-            deleteStmt.setString(1, crime.getCaseNumber());
-            deleteStmt.executeUpdate();
-
-            // Return null so the caller can no longer operate on the Crimes instance.
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            if(connection != null) {
-                connection.close();
-            }
-            if(deleteStmt != null) {
-                deleteStmt.close();
-            }
+        try {            connection = connectionManager.getConnection();
+        deleteStmt = connection.prepareStatement(deleteCrime);
+        deleteStmt.setString(1, crime.getCaseNumber());
+        deleteStmt.executeUpdate();
+        // Return null so the caller can no longer operate on the Crimes instance after deletion.
+        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw e;
+    } finally {
+        if(connection != null) {
+            connection.close();
+        }
+        if(deleteStmt != null) {
+            deleteStmt.close();
         }
     }
-
-  
-
-   
 }
+}
+
+           

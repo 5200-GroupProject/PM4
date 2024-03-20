@@ -3,82 +3,47 @@ package kit.model;
 import java.util.Date;
 
 public class Crimes {
-	protected String caseNumber;
+    protected String caseNumber;
     protected Date createdDateTime;
     protected String address;
-    protected int zipCode;
-    
-	/**
-	 * @param caseNumber
-	 * @param createdDateTime
-	 * @param address
-	 * @param zipCode
-	 */
-	public Crimes(String caseNumber, Date createdDateTime, String address, int zipCode) {
-		this.caseNumber = caseNumber;
-		this.createdDateTime = createdDateTime;
-		this.address = address;
-		this.zipCode = zipCode;
-	}
+    protected String zipCode;
 
-	/**
-	 * @return the caseNumber
-	 */
-	public String getCaseNumber() {
-		return caseNumber;
-	}
+    public Crimes(String caseNumber, Date createdDateTime, String address, String zipCode) {
+        this.caseNumber = caseNumber;
+        this.createdDateTime = createdDateTime;
+        this.address = address;
+        this.zipCode = zipCode;
+    }
 
-	/**
-	 * @param caseNumber the caseNumber to set
-	 */
-	public void setCaseNumber(String caseNumber) {
-		this.caseNumber = caseNumber;
-	}
+    public String getCaseNumber() {
+        return caseNumber;
+    }
 
-	/**
-	 * @return the createdDateTime
-	 */
-	public Date getCreatedDateTime() {
-		return createdDateTime;
-	}
+    public void setCaseNumber(String caseNumber) {
+        this.caseNumber = caseNumber;
+    }
 
-	/**
-	 * @param createdDateTime the createdDateTime to set
-	 */
-	public void setCreatedDateTime(Date createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
+    public Date getCreatedDateTime() {
+        return createdDateTime;
+    }
 
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
+    public void setCreatedDateTime(Date createdDateTime) {
+        this.createdDateTime = createdDateTime;
+    }
 
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	/**
-	 * @return the zipCode
-	 */
-	public int getZipCode() {
-		return zipCode;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	/**
-	 * @param zipCode the zipCode to set
-	 */
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	}
-    
-    
-	
-    
-    
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 }
