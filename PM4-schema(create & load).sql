@@ -43,10 +43,10 @@ CREATE TABLE Hotels (
 
 CREATE TABLE Attractions (
     AttractionId INT AUTO_INCREMENT PRIMARY KEY,
-    AttractionsName VARCHAR(255),
-    Phone INT,
+    Name VARCHAR(255),
+    Phone VARCHAR(50),
     Website VARCHAR(2048),
-    ZipCode INT,
+    ZipCode VARCHAR(20),
     Area VARCHAR(255)
 );
 
@@ -170,7 +170,7 @@ LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Attract
 	FIELDS TERMINATED BY ','  ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 ROWS
-    ( AttractionsName,Phone, Website, ZipCode, Area);
+    ( Name,Phone, Website, ZipCode, Area);
 
 LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/AttractionReviews.csv' INTO TABLE AttractionReviews
 	FIELDS TERMINATED BY ',' ENCLOSED BY '"'
