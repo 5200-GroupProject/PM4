@@ -124,3 +124,16 @@ CREATE TABLE CreditCards (
         REFERENCES Users (UserName)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+
+
+LOAD DATA LOCAL INFILE 'group_assignment/SeattleTravelKit-Tables/Crimes.csv'
+INTO TABLE Crimes
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(@CaseNumber, @CreatedDateTime, @Address, @ZipCode)
+SET CaseNumber = @CaseNumber,
+    CreatedDateTime = IF(@CreatedDateTime = '0000-00-00 00:00:00', NULL, STR_TO_DATE(@CreatedDateTime, '%Y-%m-%d %H:%i:%s')),
+    Address = @Address,
+    ZipCode = IF(TRIM(@ZipCode) = '', 0, @ZipCode);
