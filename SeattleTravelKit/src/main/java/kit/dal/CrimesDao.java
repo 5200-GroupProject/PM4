@@ -46,7 +46,7 @@ public class CrimesDao {
         }
     }
 
-    public List<Crimes> findCrimesByZipCode(String zipCode) throws SQLException {
+    public List<Crimes> findCrimesByZipCode(Integer zipCode) throws SQLException {
         List<Crimes> crimes = new ArrayList<>();
         
         String selectCrimes = "SELECT CaseNumber,CreatedDateTime,Address,ZipCode FROM Crimes WHERE ZipCode LIKE ?;";

@@ -162,7 +162,7 @@ public class HotelsDao {
 	public List<Hotels> findHotelZipCode(int zipCode) throws SQLException {
 		Connection connection = null;
 		PreparedStatement selectStmt = null;
-		String selectHotel = "SELECT HotleId, HotelName, Rating, Website, Phone, Details, Address, ZipCode, City " +
+		String selectHotel = "SELECT HotelId, HotelName, Rating, Website, Phone, Details, Address, ZipCode, City " +
 							"FROM Hotels WHERE ZipCode=? ";
 		ResultSet results = null;
 		List<Hotels> hotels = new ArrayList<Hotels>();
