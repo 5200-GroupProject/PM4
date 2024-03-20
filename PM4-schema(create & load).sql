@@ -104,7 +104,7 @@ CREATE TABLE  Users (
     Password VARCHAR(255),
     FirstName VARCHAR(50),
     LastName VARCHAR(50),
-    Phone INT,
+    Phone VARCHAR(20),
     CONSTRAINT pk_Users_UserName PRIMARY KEY (UserName)
 );
 
