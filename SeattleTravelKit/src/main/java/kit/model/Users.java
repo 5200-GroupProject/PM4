@@ -6,7 +6,7 @@ public class Users {
 	protected String password;
 	protected String firstName;
 	protected String lastName;
-	protected long phone;
+	protected String phone;
 	/**
 	 * @param userName
 	 * @param email
@@ -15,7 +15,7 @@ public class Users {
 	 * @param lastName
 	 * @param phone
 	 */
-	public Users(String userName, String email, String password, String firstName, String lastName, long phone) {
+	public Users(String userName, String email, String password, String firstName, String lastName, String phone) {
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
@@ -91,13 +91,13 @@ public class Users {
 	/**
 	 * @return the phone
 	 */
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 	/**
 	 * @param phone the phone to set
 	 */
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	

@@ -47,7 +47,7 @@ public class UsersCreate extends HttpServlet {
 					String password = req.getParameter("password");
 		        	String firstName = req.getParameter("firstname");
 		        	String lastName = req.getParameter("lastname");
-					long phone = Integer.valueOf(req.getParameter("phone"));
+					String phone = req.getParameter("phone");
 
 					Users user = new Users(userName, email, password, firstName, lastName, phone);
 					try {

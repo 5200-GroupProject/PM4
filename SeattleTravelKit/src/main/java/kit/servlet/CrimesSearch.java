@@ -39,7 +39,7 @@ public class CrimesSearch extends HttpServlet {
             messages.put("success", "Please enter a valid zip code.");
         } else {
         	try {
-            	crimes = crimesDao.findCrimesByZipCode(Integer.valueOf(zipCode));
+            	crimes = crimesDao.findCrimesByZipCode(zipCode);
             } catch (SQLException e) {
     			e.printStackTrace();
     			throw new IOException(e);
@@ -65,7 +65,7 @@ public class CrimesSearch extends HttpServlet {
             messages.put("success", "Please enter a valid name.");
         } else {
         	try {
-            crimes = crimesDao.findCrimesByZipCode(Integer.valueOf(zipCode));
+            crimes = crimesDao.findCrimesByZipCode(zipCode);
             } catch (SQLException e) {
     			e.printStackTrace();
     			throw new IOException(e);

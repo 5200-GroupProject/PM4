@@ -40,6 +40,7 @@
 
 		<p>
 			<input type="submit">
+			<button type="button" onclick="window.location='UsersSearch.jsp';">Back</button>
 		</p>
 	</form>
 	<br/><br/>

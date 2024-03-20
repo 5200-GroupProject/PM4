@@ -52,7 +52,4 @@ public class CreditCards {
 	public void setExpiration(String expiration) {
 		this.expiration = expiration;
 	}
-    
-    
-
 }

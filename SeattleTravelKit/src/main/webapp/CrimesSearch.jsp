@@ -8,13 +8,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Find a User</title>
+<title>Find Crime Records</title>
 </head>
 <body>
 	<form action="findCrimes" method="post">
-		<h1>Search for a BlogUser by FirstName</h1>
+		<h1>Search for Crimes by ZipCode in Seattle</h1>
 		<p>
-			<label for="zipCode">FirstName</label>
+			<label for="zipCode">Zip Code</label>
 			<input id="zipCode" name="zipCode" value="${fn:escapeXml(param.zipCode)}">
 		</p>
 		<p>

@@ -156,7 +156,7 @@ public class AttractionsDao {
 	    PreparedStatement selectStmt = null;
 	    ResultSet results = null;
 	    List<Attractions> attractions = new ArrayList<>();
-	    String selectAttraction = "SELECT AttractionId, Name, Phone, Website, ZipCode, Area " +
+	    String selectAttraction = "SELECT AttractionId, AttractionsName, Phone, Website, ZipCode, Area " +
 	            "FROM Attractions WHERE ZipCode=?;";
 	    try {
 	        connection = connectionManager.getConnection();
@@ -166,7 +166,7 @@ public class AttractionsDao {
 
 	        while (results.next()) {
 	            int attractionId = results.getInt("AttractionId");
-	            String name = results.getString("Name");
+	            String name = results.getString("AttractionsName");
 	            String phone = results.getString("Phone");
 	            String website = results.getString("Website");
 	            int resultZipCode = results.getInt("ZipCode");

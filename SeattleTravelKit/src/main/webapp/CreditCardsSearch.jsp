@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Find a User</title>
+<title>Find CreditCard Data</title>
 </head>
 <body>
 	<form action="findCreditCards" method="post">
@@ -37,11 +37,11 @@
             </tr>
             <c:forEach items="${cards}" var="card" >
                 <tr>
-                    <td><c:out value="${card.UserName}" /></td>
-                    <td><c:out value="${card.CardNumber}" /></td>
-                    <td><c:out value="${card.Expiration}" /></td>
-                    <td><a href=""/>">Delete</a></td>
-                    <td><a href=""/>">Update</a></td>
+                    <td><c:out value="${card.userName}" /></td>
+                    <td><c:out value="${card.cardNumber}" /></td>
+                    <td><c:out value="${card.expiration}" /></td>
+                    <td><a href=""/>"Delete</a></td>
+                    <td><a href=""/>"Update</a></td>
                 </tr>
             </c:forEach>
        </table>
