@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS SeattleTravelKit;
 USE SeattleTravelKit;
 
-DROP TABLE IF EXISTS HotelReviews;
+DROP TABLE IF EXISTS HotelsReviews;
 DROP TABLE IF EXISTS Hotels;
 DROP TABLE IF EXISTS Reviews;
 DROP TABLE IF EXISTS RestaurantReviews;
@@ -28,14 +28,14 @@ CREATE TABLE Hotels (
 );
 
 
-  CREATE TABLE HotelReviews (
+  CREATE TABLE HotelsReviews (
     ReviewId INT PRIMARY KEY AUTO_INCREMENT,
     HotelId INT,
     Service FLOAT,
     Cleanliness FLOAT,
     Location FLOAT,
     SleepQuality FLOAT,
-    CONSTRAINT fk_HotelReviews_HotelId FOREIGN KEY (HotelId)
+    CONSTRAINT fk_HotelsReviews_HotelId FOREIGN KEY (HotelId)
 		REFERENCES  Hotels (HotelId)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -134,52 +134,52 @@ CREATE TABLE CreditCards (
 );
 
 
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Hotels.csv' INTO TABLE Hotels
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/Hotels.csv' INTO TABLE Hotels
   FIELDS TERMINATED BY ','  ENCLOSED BY '\"'
   LINES TERMINATED BY '\n'
   IGNORE 1 LINES
   (HotelName,Rating,Website,Phone,Details,Address,ZipCode,City);
 
-LOAD DATA LOCAL INFILE "/Users/a123/Desktop/5200/SeattleTravelKit-Tables/HotelReviews.csv" INTO TABLE HotelReviews
+LOAD DATA LOCAL INFILE "/tmp/SeattleTravelKit-Tables/HotelReviews.csv" INTO TABLE HotelsReviews
   FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'
   LINES TERMINATED BY '\n'
   IGNORE 1 LINES
   (ReviewId,HotelId,Service,Cleanliness,Location,SleepQuality);
 
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Reviews.csv' INTO TABLE Reviews
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/Reviews.csv' INTO TABLE Reviews
 	FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 	LINES TERMINATED BY '\n' 
 	IGNORE 1 LINES
 	(ReviewId, UserName, CreatedTime, Content, Rating);
 
 
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/RestaurantReviews.csv' INTO TABLE RestaurantReviews
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/RestaurantReviews.csv' INTO TABLE RestaurantReviews
 	FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES
 	(ReviewId, RestaurantID, Service, FoodQuality, OperationTime);
 
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Reviews.csv' INTO TABLE Reviews
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/Reviews.csv' INTO TABLE Reviews
 	FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES
 	(ReviewId, UserName, CreatedTime, Content, Rating);
   
     
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Attractions.csv' INTO TABLE Attractions
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/Attractions.csv' INTO TABLE Attractions
 	FIELDS TERMINATED BY ','  ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 ROWS
     ( Name,Phone, Website, ZipCode, Area);
 
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/AttractionReviews.csv' INTO TABLE AttractionReviews
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/AttractionReviews.csv' INTO TABLE AttractionReviews
 	FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES
     (ReviewId,AttractionId,Duration);
 
 
-LOAD DATA LOCAL INFILE "/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Crimes.csv" INTO TABLE Crimes
+LOAD DATA LOCAL INFILE "/tmp/SeattleTravelKit-Tables/Crimes.csv" INTO TABLE Crimes
   FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'
   LINES TERMINATED BY '\n'
   IGNORE 1 LINES
@@ -189,24 +189,22 @@ LOAD DATA LOCAL INFILE "/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Crimes.
     Address = @Address,
     ZipCode = IF(TRIM(@ZipCode) = '', 0, @ZipCode);
 
-LOAD DATA LOCAL INFILE "/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Restaurants.csv" INTO TABLE Restaurants
+LOAD DATA LOCAL INFILE "/tmp/SeattleTravelKit-Tables/Restaurants.csv" INTO TABLE Restaurants
   FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'
   LINES TERMINATED BY '\n'
   IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Users.csv' INTO TABLE Users
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/Users.csv' INTO TABLE Users
 	FIELDS TERMINATED BY ','  ENCLOSED BY ""
 	LINES TERMINATED BY '\n'
 	IGNORE 1 ROWS;
 
-LOAD  DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/Address.csv' INTO TABLE Address
+LOAD  DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/Address.csv' INTO TABLE Address
 	FIELDS TERMINATED BY ','  ENCLOSED BY ""
 	LINES TERMINATED BY '\n'
 	IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/Users/a123/Desktop/5200/SeattleTravelKit-Tables/CreditCards.csv' INTO TABLE CreditCards
+LOAD DATA LOCAL INFILE '/tmp/SeattleTravelKit-Tables/CreditCards.csv' INTO TABLE CreditCards
 	FIELDS TERMINATED BY ','  ENCLOSED BY ""
 	LINES TERMINATED BY '\n'
 	IGNORE 1 ROWS;
-    
-
