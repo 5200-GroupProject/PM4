@@ -36,7 +36,7 @@ public class Inserter {
 	        System.out.format("Reading attractions:" + attraction.getAttractionsName());
 	    }
 		
-	      List<Crimes> crimes = crimesDao.findCrimesByZipCode(98168);
+	      List<Crimes> crimes = crimesDao.findCrimesByZipCode("98168");
 	      
 		    for (Crimes crime : crimes) {
 		        System.out.format("Reading crimes:" + crime.getAddress());
