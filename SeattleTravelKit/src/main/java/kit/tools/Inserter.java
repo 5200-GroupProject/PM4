@@ -36,13 +36,27 @@ public class Inserter {
 	        System.out.format("Reading attractions:" + attraction.getAttractionsName());
 	    }
 		
-      List<Crimes> crimes = crimesDao.findCrimesByZipCode(98168);
-      
-	    for (Crimes crime : crimes) {
-	        System.out.format("Reading crimes:" + crime.getAddress());
+	      List<Crimes> crimes = crimesDao.findCrimesByZipCode(98168);
+	      
+		    for (Crimes crime : crimes) {
+		        System.out.format("Reading crimes:" + crime.getAddress());
+		        }
+		    System.out.println(crimes.size());
+	    
+	    
+	    try {
+	        List<CityCrimeStats> safeZipCodes = crimesDao.getTop10CitiesWithLeastCrimes();
+	        System.out.println("Top 10 Safest Zip Codes:");
+	        for (CityCrimeStats stats : safeZipCodes) {
+	            System.out.format("ZipCode: %s, Crime Count: %d\n", stats.getZipCode(), stats.getCrimeCount());
 	        }
-	    System.out.println(crimes.size());
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.out.println("Failed to retrieve the safest cities.");
+	    }
 	    
 	   }
+	
+	
 }
 

@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import kit.model.CityCrimeStats;
 import kit.model.Crimes;
 
 public class CrimesDao {
@@ -149,6 +151,41 @@ public class CrimesDao {
             }
         }
     }
+    
+    public List<CityCrimeStats> getTop10CitiesWithLeastCrimes() throws SQLException {
+        List<CityCrimeStats> cityCrimeStats = new ArrayList<>();
+
+        String selectStats = "SELECT ZipCode, COUNT(*) AS CrimeCount FROM Crimes GROUP BY ZipCode ORDER BY CrimeCount ASC LIMIT 10;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectStats);
+            results = selectStmt.executeQuery();
+            while (results.next()) {
+                String zipCode = results.getString("ZipCode");
+                int crimeCount = results.getInt("CrimeCount");
+                CityCrimeStats stats = new CityCrimeStats(zipCode, crimeCount);
+                cityCrimeStats.add(stats);
+            }
+            return cityCrimeStats;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (selectStmt != null) {
+                selectStmt.close();
+            }
+            if (results != null) {
+                results.close();
+            }
+        }
+    }
+    
 
     public Crimes delete(Crimes crime) throws SQLException {
         String deleteCrime = "DELETE FROM Crimes WHERE CaseNumber=?;";
