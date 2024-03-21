@@ -80,7 +80,7 @@ CREATE TABLE Crimes (
     CaseNumber VARCHAR(50),
     CreatedDateTime DATETIME,
     Address VARCHAR(255),
-    ZipCode INT,
+    ZipCode VARCHAR(20),
    CONSTRAINT pk_Crimes_CaseNumber PRIMARY KEY (CaseNumber)
 );
 
