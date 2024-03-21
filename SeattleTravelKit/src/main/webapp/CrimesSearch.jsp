@@ -14,7 +14,7 @@
 	<form action="findCrimes" method="post">
 		<h1>Search for Crimes by ZipCode in Seattle</h1>
 		<p>
-			<label for="zipCode">Zip Code</label>
+			<label for="zipCode">ZipCode</label>
 			<input id="zipCode" name="zipCode" value="${fn:escapeXml(param.zipCode)}">
 		</p>
 		<p>
@@ -23,13 +23,15 @@
 			<span id="successMessage"><b>${messages.success}</b></span>
 		</p>
 	</form>
+	<p><a href="/SeattleTravelKit/safestZipCodes">Click here to view the top 10 safest ZipCodes in Big Seattle Area</a></p>
+	
 	<h1>Matching Crimes</h1>
         <table border="1">
             <tr>
                 <th>CaseNumber</th>
                 <th>Date</th>
                 <th>Address</th>
-                <th>Zip Code</th>
+                <th>ZipCode</th>
             </tr>
             <c:forEach items="${crimes}" var="crime" >
                 <tr>

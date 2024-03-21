@@ -11,8 +11,22 @@
     <title>Find a User</title>
 </head>
 <body>
+
 <form action="findUsers" method="post">
-    <h1>Search for User by UserName</h1>
+	<img src="https://imgur.com/NnMj65o.png" alt="Seattle Travel Kit">
+	<h1>Welcome to Seattle Travel Kit</h1>
+	<h3>Your One-Stop Compass for Exploring the Evergreen City</h3>
+	<button type="button" onclick="window.location='findCreditCards';">Credit Cards</button>
+	<button type="button" onclick="window.location='findAttractions';">Attractions</button>
+	<button type="button" onclick="window.location='findRestaurants';">Restaurants</button>
+	<button type="button" onclick="window.location='findHotels';">Hotels</button>
+	<button type="button" onclick="window.location='findCrimes';">Crimes</button>
+	
+	<button type="button" onclick="window.location='findAttractionReviews';">Attraction Reviews</button>
+	<button type="button" onclick="window.location='findRestaurantReviews';">Restaurant Reviews</button>
+	<button type="button" onclick="window.location='findHotelReviews';">Hotel Reviews</button>
+	<hr>
+    <h2>Search for User by UserName</h2>
     <p>
         <label for="username">UserName</label>
         <input id="username" name="username" value="${fn:escapeXml(param.username)}">
@@ -27,7 +41,7 @@
 <div id="userCreate"><a href="userCreate">Create User</a></div>
 <br/>
 
-<h1>Matching User</h1>
+<h2>Matching User</h2>
 <c:choose>
     <c:when test="${not empty user}">
         <table border="1">
