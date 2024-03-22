@@ -1,10 +1,15 @@
 package kit.dal;
 
 import kit.model.AttractionReviews;
+import kit.model.Hotels;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import org.apache.tomcat.util.file.Matcher;
 
 public class AttractionReviewsDao {
     protected ConnectionManager connectionManager;
@@ -74,27 +79,67 @@ public class AttractionReviewsDao {
     }
 
     
-    public List<Integer> findAttractionsByRatingAbove(double rating) throws SQLException {
-        List<Integer> attractionIds = new ArrayList<>();
-        String selectAttractionIds = "SELECT DISTINCT attractionId FROM AttractionReviews WHERE rating > ?;";
+    
+    public List<AttractionReviews> findAttractionsByDurationAbove(String durationStr) throws SQLException {
+        List<AttractionReviews> attractionReviews = new ArrayList<>();
+        
+        // Convert the input string duration to an integer (number of minutes).
+        int durationMinutes = parseDuration(durationStr);
+        
+        // SQL query to select attraction IDs with duration greater than the specified minutes.
+        // Assumes the duration column in the database contains values like 'XXX minutes'.
+        String selectAttractionIds = "SELECT ReviewId, AttractionId, Duration " +
+        		"FROM AttractionReviews WHERE CAST(SUBSTRING_INDEX(Duration, ' ', 1) AS UNSIGNED) > ?;";
+
         Connection connection = null;
         PreparedStatement selectStmt = null;
         ResultSet results = null;
         try {
             connection = connectionManager.getConnection();
             selectStmt = connection.prepareStatement(selectAttractionIds);
-            selectStmt.setDouble(1, rating);
+            selectStmt.setInt(1, durationMinutes); // Use the parsed duration in minutes
             results = selectStmt.executeQuery();
             while (results.next()) {
-                attractionIds.add(results.getInt("attractionId"));
+				int reviewId = results.getInt("ReviewId");		 
+//			    System.out.println("ReviewId from database: " + reviewId); // Debug print statemen
+				int attractionId = results.getInt("AttractionId");
+				String duration = results.getString("Duration");				
+				AttractionReviews attractionReview = new AttractionReviews(reviewId, attractionId, duration);
+//				System.out.println("New ReviewId" + attractionReview.getReviewId()); // Debug print statemen
+				attractionReviews.add(attractionReview);
+				
             }
         } finally {
             if(results != null) results.close();
             if(selectStmt != null) selectStmt.close();
             if(connection != null) connection.close();
         }
-        return attractionIds;
+        return attractionReviews;
     }
+
+    private int parseDuration(String durationStr) {
+        if (durationStr == null || durationStr.trim().isEmpty()) {
+            throw new IllegalArgumentException("Duration string cannot be null or empty.");
+        }
+
+        // Use regular expression to find the first number in the string.
+        // This will match any sequence of digits at the beginning of the string.
+        Pattern pattern = Pattern.compile("^\\d+");
+        java.util.regex.Matcher matcher = pattern.matcher(durationStr);
+        if (matcher.find()) {
+            try {
+                // Convert the first sequence of digits to an integer.
+                return Integer.parseInt(matcher.group());
+            } catch (NumberFormatException e) {
+                // In case something went wrong with the conversion.
+                throw new IllegalArgumentException("Invalid duration format: " + durationStr, e);
+            }
+        } else {
+            // If the string does not start with a number, throw an exception.
+            throw new IllegalArgumentException("Invalid duration format, no number found: " + durationStr);
+        }
+    }
+
     
     
     public AttractionReviews updateContent(int reviewId, String newContent) throws SQLException {
