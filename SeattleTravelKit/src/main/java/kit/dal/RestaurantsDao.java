@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import kit.model.Restaurants;
 
@@ -167,50 +169,56 @@ public class RestaurantsDao {
 	
 	
 	public List<Restaurants> findRestaurantByZipCode(int zipCode) throws SQLException {
-		Connection connection = null;
-		PreparedStatement selectStmt = null;
-		String selectRest = "SELECT RestaurantId, RestaurantName, Address, Rating, Area, Category, Service, ZipCode " + 
-							"FROM Restaurants WHERE ZipCode=?;";
-		ResultSet results = null;
-		List<Restaurants> restaurants = new ArrayList<Restaurants>();
-		
-		try {
-			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectRest);
-			
-			selectStmt.setInt(1,  zipCode);
-			
-			results = selectStmt.executeQuery();
-			while (results.next()) {
-				int restaurantId = results.getInt("RestaurantId");
-				String restaurantName = results.getString("RestaurantName");
-				String address = results.getString("Address");
-				Double rating = results.getDouble("Rating");
-				String area = results.getString("Area");
-				String category = results.getString("Category");
-				String service = results.getString("Service");
+	    Connection connection = null;
+	    PreparedStatement selectStmt = null;
+	    String selectRest = "SELECT RestaurantId, RestaurantName, Address, Rating, Area, Category, Service, ZipCode " +
+	                        "FROM Restaurants WHERE ZipCode=?;";
+	    ResultSet results = null;
+	    List<Restaurants> restaurants = new ArrayList<Restaurants>();
+	    Set<String> seenRestaurantNames = new HashSet<>(); // Set to keep track of unique restaurant names
 
-		
-				Restaurants restaurant = new Restaurants(restaurantId, restaurantName, address, rating, area, category, service, zipCode);
-				restaurants.add(restaurant);
-			}
-			
-			return restaurants;
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-            if(connection != null) {
-                connection.close();
-            }
-            if(selectStmt != null) {
-                selectStmt.close();
-            }
-            if(results != null) {
-                results.close();
-            }
-        }
+	    try {
+	        connection = connectionManager.getConnection();
+	        selectStmt = connection.prepareStatement(selectRest);
+	        
+	        selectStmt.setInt(1, zipCode);
+	        
+	        results = selectStmt.executeQuery();
+	        while (results.next()) {
+	            String restaurantName = results.getString("RestaurantName");
+	            // Skip adding the restaurant to the list if it's already been processed
+	            if (!seenRestaurantNames.contains(restaurantName)) {
+	                int restaurantId = results.getInt("RestaurantId");
+	                String address = results.getString("Address");
+	                Double rating = results.getDouble("Rating");
+	                String area = results.getString("Area");
+	                String category = results.getString("Category");
+	                String service = results.getString("Service");
+	                
+	                Restaurants restaurant = new Restaurants(restaurantId, restaurantName, address, rating, area, category, service, zipCode);
+	                restaurants.add(restaurant);
+	                seenRestaurantNames.add(restaurantName); // Add this name to the set of processed names
+	            }
+	        }
+	        
+	        return restaurants;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    } finally {
+	        // It's important to close resources in the reverse order of their opening
+	        if (results != null) {
+	            results.close();
+	        }
+	        if (selectStmt != null) {
+	            selectStmt.close();
+	        }
+	        if (connection != null) {
+	            connection.close();
+	        }
+	    }
 	}
+
 	
 	public List<Restaurants> findRestaurantAboveRating(double rating) throws SQLException {
 		Connection connection = null;
