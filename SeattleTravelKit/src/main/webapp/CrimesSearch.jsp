@@ -29,14 +29,12 @@
         <table border="1">
             <tr>
                 <th>CaseNumber</th>
-                <th>Date</th>
                 <th>Address</th>
                 <th>ZipCode</th>
             </tr>
             <c:forEach items="${crimes}" var="crime" >
                 <tr>
                     <td><c:out value="${crime.getCaseNumber()}" /></td>
-                    <td><fmt:formatDate value="${crime.getCreatedDateTime()}" pattern="yyyy-MM-dd"/></td>
                     <td><c:out value="${crime.getAddress()}" /></td>
                     <td><c:out value="${crime.getZipCode()}" /></td>
                 </tr>
