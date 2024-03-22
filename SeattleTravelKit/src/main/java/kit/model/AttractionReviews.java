@@ -35,6 +35,18 @@ public class AttractionReviews extends Reviews {
 		this.duration = duration;
 	}
 	
+	//new constructor according to the CSV file
+	public AttractionReviews(int reviewId, int attractionId, String duration) {
+        // Call to the super class constructor is necessary. Assuming you can provide default values for inherited fields.
+        super(reviewId, "", null, "", 0); // Providing default values for userName, createdTime, content, and rating
+        this.reviewId = reviewId;
+        this.attractionId = attractionId;
+        this.duration = duration;
+    }
+	
+
+	
+	
 	/**
 	 * @return the reviewId
 	 */
